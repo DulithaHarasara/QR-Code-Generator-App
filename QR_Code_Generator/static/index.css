@@ -1,0 +1,20 @@
+#navText{
+    color: white;
+    margin-left: 80px;
+}
+
+.headingText{
+    margin-top: 20px;
+}
+
+.QRImage{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.QRImage img{
+    width: 450px;
+    height: 450px;
+}
+

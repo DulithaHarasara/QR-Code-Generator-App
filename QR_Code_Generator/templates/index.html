@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{url_for('static',filename = 'index.css')}}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    
+  <!-- As a heading -->
+    <nav class="navbar navbar-light bg-black">
+        <span class="navbar-brand mb-0 h1" id="navText">QR Code Generator</span>
+     </nav>
+     <div class="container">
+    <h3 class="headingText">Generate Your QR Code</h1>
+
+    <div class="row">
+    <div class="col">
+    <form method="POST" action="/" class="form-group">
+        
+        <table class="table">
+        <tr>
+        <td><label for="data">Data:</label></td>
+        <td><input type="text" name="data" id="name" required><br><br></td>
+        </tr>
+     
+        <tr>
+        <td><label for="bgcolor">BackGround color:</label></td>
+        <td><input type="color" name="bgcolor" id="color" value="#FFFFFF"><br><br></td>
+        </tr>
+      
+        <tr>
+        <td><label for="fillcolor">Fill color:</label></td>
+        <td><input type="color" name="fillcolor" id="fillcolor" value="#000000"><br><br></td>
+        </tr>
+
+        <tr>
+        <td><label for="version">Version:</label></td>
+        <td>
+            <select name="version">
+                {% for i in range(1,21) %}
+                    <option value="{{i}}" {% if i == 5 %}selected{% endif %}>{{i}}</option>
+                {% endfor %}
+            </select>
+        <br><br></td>
+        </tr>
+
+        <tr>
+        <td><label for="border">Border:</label></td>
+        <td>
+            <select name="border">
+                {% for j in range(1,21) %}
+                    <option value="{{j}}" {% if j == 10 %}selected{% endif %}>{{j}}</option>
+                {% endfor %}
+            </select>
+        <br><br></td>
+        </tr>
+        
+        <tr>
+        <td><button type="submit" class="btn btn-primary">Generate QR</button></td>
+        <td><button id="downloadButton" class="btn btn-success">Download QR</button></td>
+        </tr>
+
+        </table>
+
+    </form>
+    </div>
+    <div class="col">
+        <div class="QRImage">
+            {% if data %}
+                <img src="{{data}}" alt="" class="QRImage">
+            {% endif %}
+        </div>
+    
+        <input type="hidden" id="base64Image" value="{{ data }}">
+    </div>
+    </div>
+    </div>
+    
+
+    <script>
+        document.getElementById("downloadButton").addEventListener("click", function() {
+            var base64Image = document.getElementById("base64Image").value;
+            
+            var link = document.createElement('a');
+            link.href = base64Image;
+            link.download = "{{fileName}}.png";
+            link.click();
+        });
+    </script>
+</body>
+</html>
